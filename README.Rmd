@@ -6,7 +6,7 @@ output: github_document
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
+  collapse = FALSE,
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
@@ -19,6 +19,7 @@ library(naratext)
 
 <!-- badges: start -->
 ![](https://img.shields.io/badge/cool-useless-green.svg)
+[![R-CMD-check](https://github.com/coolbutuseless/naratext/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/coolbutuseless/naratext/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `{naratext}` renders text to raster/nativeRaster images using:
@@ -41,7 +42,7 @@ remotes::install_github('coolbutuseless/naratext')
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+```{r example, fig.height = 1.5}
 #' install.packages(c('textshaping', 'ragg'))
 library(nara)
 library(naratext)
@@ -52,7 +53,8 @@ font_files <- c(
   system.file("fonts", "Montserrat", "static", "Montserrat-Medium.ttf"    , package="grDevices")
 )
 color <- c('red', 'blue')
-txt <- nr_text(strings, font_files = font_files, color = color)
+txt <- nr_text(strings, font_files = font_files, color = color, scale = 10, background = 'grey90')
+dim(txt)
 plot(txt, T)
 ```
 

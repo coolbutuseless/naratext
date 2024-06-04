@@ -10,6 +10,7 @@ nr_text(
   font_idx = 0,
   color = NA,
   scale = 1,
+  background = "transparent",
   native_raster = TRUE,
   ...
 )
@@ -24,6 +25,8 @@ nr_text(
 \item{color}{single colour}
 
 \item{scale}{size scale factor. Default: 1.0}
+
+\item{background}{background colour. Default 'transparent'}
 
 \item{native_raster}{logical. Return a native raster? default: TRUE.
 If false, just returns a raster object}

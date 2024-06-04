@@ -9,6 +9,7 @@
 #' @param color single colour
 #' @param native_raster logical. Return a native raster? default: TRUE.
 #'        If false, just returns a raster object
+#' @param background background colour. Default 'transparent'
 #' @param ... further arguments passed to \code{textshaping::shape_text()}
 #' 
 #' @return \code{nativeRaster}
@@ -30,7 +31,7 @@
 #'
 #' @export
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-nr_text <- function(strings, font_files, font_idx = 0, color = NA, scale = 1, native_raster = TRUE, ...) {
+nr_text <- function(strings, font_files, font_idx = 0, color = NA, scale = 1, background = 'transparent', native_raster = TRUE, ...) {
   
   ts <- textshaping::shape_text(strings, id = 1, weight = c(400, 700), path = font_files)
   
@@ -61,11 +62,10 @@ nr_text <- function(strings, font_files, font_idx = 0, color = NA, scale = 1, na
     grid::grid.glyph(glyphs)
   }
   
-  scale <- 1
   f <- ragg::agg_capture(
     width  = scale * (0 + ceiling(ts$metrics$width )), 
     height = scale * (4 + ceiling(ts$metrics$height)),
-    background = 'transparent',
+    background = background,
     scaling = scale
   )
   grid::grid.glyph(glyphs)
