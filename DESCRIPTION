@@ -1,0 +1,17 @@
+Package: naratext
+Type: Package
+Title: Render Text as Native Raster Images
+Version: 0.1.0
+Authors@R: c(
+    person("Mike", "Cheng", role = c("aut", "cre", 'cph'), email = "mikefc@coolbutuseless.com")
+    )
+Maintainer: Mike Cheng <mikefc@coolbutuseless.com>
+Description: Render text as native raster images.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.1
+Imports:
+  nara,
+  textshaping,
+  ragg
