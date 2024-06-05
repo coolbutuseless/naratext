@@ -63,7 +63,7 @@ install.packages(c('textshaping', 'ragg'))
 remotes::install_github('coolbutuseless/naratext')
 ```
 
-## Example
+## Example - full font rendering
 
 ```{r example, fig.height = 1.5}
 library(grid)
@@ -79,9 +79,22 @@ color <- c('red', 'blue')
 txt <- nr_text(strings, font_files = font_files, color = color, scale = 10, background = 'lightblue')
 dim(txt)
 class(txt)
-grid.raster(txt)
+grid.raster(txt, interpolate = FALSE)
 ```
 
+## Example - Bitmap font rendering
+
+```{r fig.height = 1.5}
+library(grid)
+library(nara)
+library(naratext)
+
+font_file <- system.file("fonts/spleen/spleen-8x16.hex.gz", package = "bittermelon") 
+font <- bittermelon::read_hex(font_file)
+txt <- nr_text_bitmap("Ping #RStats", font = font, fill = 'lightblue')
+grid::grid.newpage()
+grid::grid.raster(txt, interpolate = FALSE)
+```
 
 
 
