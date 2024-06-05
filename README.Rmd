@@ -91,9 +91,17 @@ library(naratext)
 
 font_file <- system.file("fonts/spleen/spleen-8x16.hex.gz", package = "bittermelon") 
 font <- bittermelon::read_hex(font_file)
-txt <- nr_text_bitmap("Ping #RStats", font = font, fill = 'lightblue')
-grid::grid.newpage()
-grid::grid.raster(txt, interpolate = FALSE)
+txt <- nr_text_bitmap("Ping #RStats", font = font, fill = 'lightpink')
+dim(txt)
+grid::grid.newpage(); grid::grid.raster(txt, interpolate = FALSE)
+```
+
+
+```{r fig.height = 1.5}
+font <- bittermelon::read_monobit("~/projectsdata/spleen/spleen-32x64.bdf", quietly = TRUE)
+txt <- nr_text_bitmap("Ping #RStats", font = font, fill = 'lightgreen')
+dim(txt)
+grid::grid.newpage(); grid::grid.raster(txt, interpolate = FALSE)
 ```
 
 

@@ -89,9 +89,28 @@ library(naratext)
 
 font_file <- system.file("fonts/spleen/spleen-8x16.hex.gz", package = "bittermelon") 
 font <- bittermelon::read_hex(font_file)
-txt <- nr_text_bitmap("Ping #RStats", font = font, fill = 'lightblue')
-grid::grid.newpage()
-grid::grid.raster(txt, interpolate = FALSE)
+txt <- nr_text_bitmap("Ping #RStats", font = font, fill = 'lightpink')
+dim(txt)
+```
+
+    #> [1] 16 96
+
+``` r
+grid::grid.newpage(); grid::grid.raster(txt, interpolate = FALSE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+
+``` r
+font <- bittermelon::read_monobit("~/projectsdata/spleen/spleen-32x64.bdf", quietly = TRUE)
+txt <- nr_text_bitmap("Ping #RStats", font = font, fill = 'lightgreen')
+dim(txt)
+```
+
+    #> [1]  64 384
+
+``` r
+grid::grid.newpage(); grid::grid.raster(txt, interpolate = FALSE)
+```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
