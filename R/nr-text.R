@@ -54,7 +54,7 @@ nr_text <- function(strings, font_files, font_idx = 0, color = NA, scale = 1, ba
     size     = ts$shape$font_size,
     fontList = glyph_font_list,
     width    = ts$metrics$width, 
-    height   = ts$metrics$height, 
+    height   = ts$metrics$height + floor(max(ts$shape$descender)) - 1, 
     col      = color
   )
   
@@ -62,15 +62,17 @@ nr_text <- function(strings, font_files, font_idx = 0, color = NA, scale = 1, ba
     grid::grid.glyph(glyphs)
   }
   
+  
   f <- ragg::agg_capture(
-    width  = scale * (0 + ceiling(ts$metrics$width )), 
-    height = scale * (4 + ceiling(ts$metrics$height)),
+    width  = ceiling(scale * ts$metrics$width), 
+    height = ceiling(scale * ts$metrics$height),
     background = background,
     scaling = scale
   )
   grid::grid.glyph(glyphs)
   im <- f()
   dev.off()
+  
   
   if (isTRUE(native_raster)) {
     im |> as.raster() |> nara::raster_to_nr() 
@@ -90,7 +92,7 @@ if (FALSE) {
     system.file("fonts", "Montserrat", "static", "Montserrat-Medium.ttf"    , package="grDevices")
   )
   color <- c('red', 'blue')
-  txt <- nr_text(strings, font_files = font_files, col = col)
+  txt <- nr_text(strings, color = color, background = 'grey90', font_files = font_files, col = col)
   plot(txt, T)
   
   
@@ -99,6 +101,70 @@ if (FALSE) {
   txt <- nr_text()
   nr_blit(nr, 200, 200, txt)
   plot(nr)
+  
+}
+
+
+if (FALSE) {
+  
+  library(nara)
+  
+  scale <- 7
+  background <- 'grey80'
+  strings <- c('Ping', ' #RStats')
+  font_files <- c(
+    system.file("fonts", "Montserrat", "static", "Montserrat-BoldItalic.ttf", package="grDevices"),
+    system.file("fonts", "Montserrat", "static", "Montserrat-Medium.ttf"    , package="grDevices")
+  )
+  color <- c('red', 'blue')
+  color <- rep.int(color, nchar(strings))
+  
+  ts <- textshaping::shape_text(strings, id = 1, weight = c(400, 700), path = font_files)
+  
+  font_list <- lapply(font_files, \(x) {
+    grDevices::glyphFont(file = x, index = 0, family = "Montserrat", weight = 700, style = "italic")
+  })
+  
+  glyph_font_list <- do.call(grDevices::glyphFontList, font_list)
+  
+  ts
+  
+  glyphs <- grDevices::glyphInfo(
+    id       = ts$shape$index, 
+    x        = ts$shape$x_offset, 
+    y        = ts$shape$y_offset,
+    font     = ts$shape$string_id, 
+    size     = ts$shape$font_size,
+    fontList = glyph_font_list,
+    width    = ts$metrics$width, 
+    height   = ts$metrics$height + floor(max(ts$shape$descender)) - 1, 
+    col      = color
+  )
+  
+  if (FALSE) {
+    grid::grid.glyph(glyphs)
+  }
+  
+  
+  f <- ragg::agg_capture(
+    width  = ceiling(scale * ts$metrics$width), 
+    height = ceiling(scale * ts$metrics$height),
+    background = background,
+    scaling = scale
+  )
+  grid::grid.glyph(glyphs)
+  # grid::grid.rect(x = 0, y = 0, 
+  #                 width  = ceiling(ts$metrics$width - 0) , 
+  #                 height = ceiling(ts$metrics$height) , 
+  #                 default.units = 'points', 
+  #                 gp = grid::gpar(fill = NA, col = 'black', lwd = 0.5), just = c(0, 0))
+  im <- f()
+  dev.off()
+  
+  im |> 
+    as.raster() |> 
+    nara::raster_to_nr() |> 
+    plot(T)
   
 }
 

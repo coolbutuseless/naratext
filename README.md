@@ -37,9 +37,11 @@ Also requires installation of:
   - [`{ragg}`](https://cran.r-project.org/package=ragg) as a graphics
     device that allows direct capture of the output to an image in
     memory (and supports glyph rendering)
+  - [‘{bittermelon}’](https://cran.r-project.org/package=bittermelon)
+    for handling bitmap fonts
 - GitHub packages
   - [`{nara}`](https://github.com/coolbutuseless/nara) for nativeRaster
-    conversion
+    utilities
 
 ``` r
 install.packages('remotes')
@@ -66,7 +68,7 @@ txt <- nr_text(strings, font_files = font_files, color = color, scale = 10, back
 dim(txt)
 ```
 
-    #> [1] 190 810
+    #> [1] 147 801
 
 ``` r
 class(txt)
